@@ -1,0 +1,37 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from StudenteServiceService WSDL service -->
+
+  <service name="StudenteService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://martina.alfasoft.it"/>
+      <parameter name="wsdlServiceElement" value="StudenteServiceService"/>
+      <parameter name="schemaQualified" value="http://martina.alfasoft.it"/>
+      <parameter name="wsdlServicePort" value="StudenteService"/>
+      <parameter name="className" value="it.alfasoft.martina.StudenteServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="StudenteService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="prendiStudenteConNome" qname="operNS:prendiStudenteConNome" xmlns:operNS="http://martina.alfasoft.it" returnQName="retNS:prendiStudenteConNomeReturn" xmlns:retNS="http://martina.alfasoft.it" returnType="rtns:Studente" xmlns:rtns="http://martina.alfasoft.it" soapAction="" >
+        <parameter qname="pns:nome" xmlns:pns="http://martina.alfasoft.it" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="prendiStudenteConNome"/>
+
+      <typeMapping
+        xmlns:ns="http://martina.alfasoft.it"
+        qname="ns:Studente"
+        type="java:it.alfasoft.martina.Studente"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
